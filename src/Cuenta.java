@@ -3,13 +3,14 @@ public class Cuenta {
     private String tipoCuenta;
     Transaccion[] transacciones = new Transaccion [50];
 
-    public Cuenta(String tipoCuenta){
+    public Cuenta(String tipoCuenta, int ID){
         this.saldo=0;
         this.tipoCuenta = tipoCuenta;
         this.numTransacciones=0;
+        id = ID;
     }
 
-    public int getId(){
+    public int getID(){
         return this.id;
     }
 
