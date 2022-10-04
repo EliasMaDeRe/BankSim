@@ -12,7 +12,7 @@ public class Cuenta {
 
     }
 
-    public static String[] getTransacciones(){
+    public static String[] getTransacciones(String idCliente, String idCuenta){
 
         return {};
 
@@ -53,7 +53,32 @@ public class Cuenta {
     }
     public static void estadoCuenta(String idCliente, String idCuenta, String FechaInicial, String FechaFinal){
 
-        
+        if(idCliente == null || idCuenta == null || FechaInicial == null || FechaFinal == null){
+
+            System.out.println("Un parametro no es valido");
+            return;
+
+        }
+
+        if(!Ruta.existe(idCliente,idCuenta)){
+            
+            System.out.println("No existe la ruta para el cliente o cuenta");
+            return;
+
+        }
+
+        String[] transacciones = Cuenta.getTransacciones(idCliente,idCuenta);
+
+        for(int i = 0; i < transacciones.length; ++i){
+
+            if(Transaccion.getFecha(transacciones[i]).compareTo(FechaInicial) >= 0 &&
+                Transaccion.getFecha(transacciones[i]).compareTo(FechaFinal) <= 0){
+
+                    System.out.println(transacciones[i]);
+
+                }
+
+        }
 
     }
 }
