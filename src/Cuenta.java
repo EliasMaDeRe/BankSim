@@ -1,7 +1,9 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.Scanner;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 public class Cuenta {
@@ -125,15 +127,73 @@ public class Cuenta {
     }
 
     public static int getNumeroDeTransacciones(String idCliente, String idCuenta){
+        Ruta.existe(idCliente, idCuenta); 
+        if (Ruta.existe(idCliente, idCuenta) == false){
+           System.out.println("La transaccion no se puede realizar debido a que el cliente o la cuenta son inexistentes.");
+           return -1;
+        }
 
-        return 1;
+        File myFile = new File(Ruta.path(idCliente, idCuenta) + "info.txt"); 
+        //leer exactamente la linea de numero de transacciones (última)
+        String [] valores = new String [4];
 
+        try {
+        Scanner readFile = new Scanner(myFile);
+        int contador = 0;
+
+        while (readFile.hasNextLine()) {
+        String data = readFile.nextLine();
+        valores[contador] = data;
+        contador += 1;
+        System.out.println(data);
+        }
+        readFile.close();
+
+        } catch (FileNotFoundException x) {
+            System.out.println("Error.");
+            x.printStackTrace();
+        }
+
+        return Integer.parseInt(valores[3]);
     }
 
-    public static void putNumeroDeTransacciones(String idCliente, String idCuenta){
+    public static void putNumeroDeTransacciones(String idCliente, String idCuenta ,int NumeroDeTransacciones){
+        File myFile = new File(Ruta.path(idCliente, idCuenta) + "info.txt"); 
+        //leer exactamente la linea de numero de transacciones (última)
+        String [] valores = new String [4];
 
-        
+        try {
+        Scanner readFile = new Scanner(myFile);
+        int contador = 0;
 
+        while (readFile.hasNextLine()) {
+        String data = readFile.nextLine();
+        valores[contador] = data;
+        contador += 1;
+        System.out.println(data);
+        }
+        readFile.close();
+
+        } catch (FileNotFoundException x) {
+            System.out.println("Error.");
+            x.printStackTrace();
+        }
+
+        try {
+
+            FileWriter writeInFile = new FileWriter(Ruta.path(idCliente, idCuenta) + "info.txt",false);
+
+           //Adding content to this file
+            for (int i = 0; i < 3; i++) {
+                writeInFile.write(valores[i]);
+            }
+            writeInFile.write(Integer.toString(NumeroDeTransacciones));
+            writeInFile.close();
+
+          } catch (IOException x) {
+            System.out.println("Error.");
+            x.printStackTrace();
+        }
     }
 
     public static void retiro(String idCliente, String idCuenta, int monto){
@@ -232,12 +292,13 @@ public class Cuenta {
 
     }
 
-
     public static void transferencia(String idClienteE, String idCuentaE, int monto, String idClienteR, String idCuentaR){
 
-        
+        retiro(idClienteE, idCuentaE, monto);
+        deposito(idClienteR, idCuentaR, monto);
 
     }
+
     public static void estadoCuenta(String idCliente, String idCuenta, String FechaInicial, String FechaFinal){
 
         if(idCliente == null || idCuenta == null || FechaInicial == null || FechaFinal == null){
