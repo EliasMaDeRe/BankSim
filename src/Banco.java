@@ -100,7 +100,7 @@ public class Banco {
         String[] cuentas = rutaCliente.list();
         for(int i = 0; i < cuentas.length-1; ++i){
 
-            if(cuenta.getId() == Integer.parseInt(cuentas[i])) return cuentas[i];
+            if(cuenta.getID() == Integer.parseInt(cuentas[i])) return cuentas[i];
 
         }
         return "#";
