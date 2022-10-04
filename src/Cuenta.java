@@ -1,37 +1,59 @@
 public class Cuenta {
-    private int id, saldo, numTransacciones;
-    private String tipoCuenta;
-    Transaccion[] transacciones = new Transaccion [50];
 
-    public Cuenta(String tipoCuenta, int ID){
-        this.saldo=0;
-        this.tipoCuenta = tipoCuenta;
-        this.numTransacciones=0;
-        id = ID;
+    public static int getSaldo(String idCliente, String idCuenta){
+
+        return 1;
+
     }
 
-    public int getID(){
-        return this.id;
+    public static void putSaldo(String idCliente, String idCuenta){
+
+        
+
     }
 
-    public int getSaldo(){
-        return this.saldo;
+    public static String[] getTransacciones(){
+
+        return {};
+
     }
 
-    public void putSaldo(int saldo){
-        this.saldo = saldo;
+    public static int getTipoDeCuenta(String idCliente, String idCuenta){
+
+        return 1;
+
     }
 
-    public String getTipoCuenta(){
-        return this.tipoCuenta;
+    public static int getNumeroDeTransacciones(String idCliente, String idCuenta){
+
+        return 1;
+
     }
 
-    public Transaccion[] getTransacciones(){
-        return transacciones;
+    public static void putNumeroDeTransacciones(String idCliente, String idCuenta){
+
+        
+
     }
 
-    public void putTransacciones(Transaccion transaccion){
-        transacciones[numTransacciones] = transaccion;
-        numTransacciones++;
+    public static void retiro(String idCliente, String idCuenta, int monto){
+
+        
+
+    }
+    public static void deposito(String idCliente, String idCuenta, int monto){
+
+        
+
+    }
+    public static void transferencia(String idClienteE, String idCuentaE, int monto, String idClienteR, String idCuentaR){
+
+        
+
+    }
+    public static void estadoCuenta(String idCliente, String idCuenta, String FechaInicial, String FechaFinal){
+
+        
+
     }
 }

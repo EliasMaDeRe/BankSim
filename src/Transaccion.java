@@ -1,31 +1,44 @@
 public class Transaccion {
-    private int monto, saldoInicial, saldoFinal;
-    private String fecha, tipo;
 
+    public static String getFecha(String transaccion){
 
-    public Transaccion(String fecha, int monto, String tipo, int saldoInicial ){
-        this.fecha= fecha;
-        this.monto = monto;
-        this.tipo = tipo;
-        this.saldoInicial = saldoInicial;
-        this.saldoFinal = saldoInicial+monto;
+        return "";
+
     }
 
-    public String getFecha(){
-        return this.fecha;
+    public static String getTipo(String transaccion){
+
+        return "";
+
     }
 
-    public int getSaldoFinal() {
-        return saldoFinal;
+    public static String getMonto(String transaccion){
+
+        return "";
+
     }
 
-    public int getSaldoInicial() {
-        return saldoInicial;
+    public static String getSaldoInicial(String transaccion){
+
+        return "";
+
     }
 
-    public String toStringTransaccion(){
+    public static String getSaldoFinal(String transaccion){
 
-        return fecha+"-"+tipo+"-"+saldoInicial+"-"+monto+"-"+saldoFinal;
+        return "";
+
+    }
+
+    public void guardarTransaccion(String transaccion, String idCliente, String idCuenta){
+
+        
+    }
+
+    public String toString(String fecha, String tipo, String monto, String saldoInicial, String saldoFinal ){
+
+        return "";
+
     }
 
 }

@@ -1,34 +1,19 @@
 public class Cliente {
-    private int id;
-    private String nombre;
-    private Cuenta cuentas[];
-    private int numeroCuentas;
 
-    public Cliente(int id, String nombre, int numeroCuentas){
-        this.id = id;
-        this.nombre = nombre;
-        this.cuentas = new Cuenta [50];
-        this.numeroCuentas = numeroCuentas;
+    public static String getNombre(String idCliente){
+
+        return "";
+
     }
+    public static String[] getCuentas(String idCliente){
 
-    public int getID (){
-        return this.id;
+        return {};
+
     }
+    public static String getNumeroCuentas(String idCliente){
 
-    public String getNombre(){
-        return this.nombre;
-    }
+        return "";
 
-    public Cuenta[] getCuentas(){
-        return this.cuentas;
-    }
-
-    public int getNumeroCuentas(){
-        return this.numeroCuentas;
-    }
-
-    public void putNumeroCuentas(int numeroCuentas){
-        this.numeroCuentas = numeroCuentas;
     }
 
 }
