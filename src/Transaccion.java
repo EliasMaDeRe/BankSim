@@ -30,12 +30,13 @@ public class Transaccion {
 
     }
 
-    public void guardarTransaccion(String transaccion, String idCliente, String idCuenta){
+    public static void guardarTransaccion(String transaccion, String idCliente, String idCuenta){
 
+        
         
     }
 
-    public String toString(String fecha, String tipo, String monto, String saldoInicial, String saldoFinal ){
+    public static String toString(String fecha, String tipo, String monto, String saldoInicial, String saldoFinal ){
 
         return "";
 
