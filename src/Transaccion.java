@@ -54,6 +54,7 @@ public class Transaccion {
             FileWriter escribir = new FileWriter(rutaCuenta, true);
 
             escribir.write(transaccion);
+            escribir.write("\r\n");
 
             escribir.close();
 

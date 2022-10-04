@@ -5,16 +5,16 @@ import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.text.DateFormat;
+
 public class Cuenta {
 
     public static int getSaldo(String idCliente, String idCuenta){
         int contador = 0;
         int saldo = 0;
         if(Ruta.existe(idCliente,idCuenta)){
-            File rutaCuenta = new File(Ruta.path(idCliente,idCuenta));
+
             try{
-                File cuenta = new File (rutaCuenta.getPath()+"/info.txt");
+                File cuenta = new File (Ruta.path(idCliente,idCuenta)+"info.txt");
                 Scanner archivo = new Scanner(cuenta);
                 String info;
                 
@@ -40,9 +40,9 @@ public class Cuenta {
         int contador = 0;
         String arreglo [] = new String [4];
         if(Ruta.existe(idCliente,idCuenta)){
-            File rutaCuenta = new File(Ruta.path(idCliente,idCuenta));
+            
             try{
-                File cuenta = new File (rutaCuenta.getPath()+"/info.txt");
+                File cuenta = new File (Ruta.path(idCliente,idCuenta)+"info.txt");
                 Scanner archivo = new Scanner(cuenta);
                 String info;
                 
@@ -72,12 +72,11 @@ public class Cuenta {
 
     public static String[] getTransacciones(String idCliente, String idCuenta){
 
-        File rutacuenta = new File(Ruta.path(idCliente, idCuenta));
-        String[] transaccion = new String[4];
+        String[] transaccion = new String[50];
         int cont = 0;
 
         try {
-            File cuenta = new File(rutacuenta.getPath()+"./transacciones.txt");
+            File cuenta = new File(Ruta.path(idCliente, idCuenta)+"transacciones.txt");
             Scanner archivo = new Scanner(cuenta);
     
 
@@ -145,7 +144,7 @@ public class Cuenta {
         String data = readFile.nextLine();
         valores[contador] = data;
         contador += 1;
-        System.out.println(data);
+
         }
         readFile.close();
 
@@ -170,7 +169,7 @@ public class Cuenta {
         String data = readFile.nextLine();
         valores[contador] = data;
         contador += 1;
-        System.out.println(data);
+
         }
         readFile.close();
 
@@ -186,6 +185,7 @@ public class Cuenta {
            //Adding content to this file
             for (int i = 0; i < 3; i++) {
                 writeInFile.write(valores[i]);
+                writeInFile.write(System.getProperty("line.separator"));
             }
             writeInFile.write(Integer.toString(NumeroDeTransacciones));
             writeInFile.close();
@@ -200,11 +200,11 @@ public class Cuenta {
         int contador = 0;
         int saldo = 0;
         String arreglo [] = new String [4];
-        int saldo_nuevo = 0;
+        int saldoNuevo = 0;
         if(Ruta.existe(idCliente,idCuenta)){
-            File rutaCuenta = new File(Ruta.path(idCliente,idCuenta));
+            
             try{
-                File cuenta = new File (rutaCuenta.getPath()+"/info.txt");
+                File cuenta = new File (Ruta.path(idCliente,idCuenta)+"info.txt");
                 try (Scanner archivo = new Scanner(cuenta)) {
                     String info;
                     
@@ -213,8 +213,8 @@ public class Cuenta {
                         if(contador == 1){
                             saldo = Integer.valueOf(info);
                             if(saldo >= monto){
-                                saldo_nuevo = saldo - monto;
-                                info = String.valueOf(saldo_nuevo);
+                                saldoNuevo = saldo - monto;
+                                info = String.valueOf(saldoNuevo);
                             }else{
                                 System.out.println("El monto a retirar debe ser menor o igual al saldo");
                                 return;
@@ -225,16 +225,19 @@ public class Cuenta {
                     }
                     archivo.close();
 
-                    contador = 0;
-                    FileWriter escribir = new FileWriter(cuenta,false);
-                    while(archivo.hasNextLine()){
-                        escribir.write(arreglo[contador]);
-                        contador++;
+                    
+                    try (FileWriter escribir = new FileWriter(cuenta,false)) {
+                        for(contador = 0; contador < 4; ++contador){
+                            escribir.write(arreglo[contador]);
+                            escribir.write("\r\n");
+                        }
+                        escribir.close();
                     }
-                    escribir.close();
                 }
-                Transaccion.guardarTransaccion(Transaccion.toString(SimpleDateFormat("yyyy/MM/dd").format(new Date()), "retiro", String.valueOf(monto), 
-                String.valueOf(Cuenta.getSaldo(idCliente,idCuenta)+monto), String.valueOf(Cuenta.getSaldo(idCliente,idCuenta))), idCliente,idCuenta);
+                String fecha = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+                Transaccion.guardarTransaccion(Transaccion.toString(fecha, "retiro", String.valueOf(monto),
+                String.valueOf(saldo), String.valueOf(saldoNuevo)), idCliente, idCuenta);
+                Cuenta.putNumeroDeTransacciones(idCliente, idCuenta, Cuenta.getNumeroDeTransacciones(idCliente, idCuenta)+1);
             }catch (Exception e) {
                System.out.println("Ocurrio un error");
             }
@@ -242,46 +245,47 @@ public class Cuenta {
         
     }
 
-    private static DateFormat SimpleDateFormat(String string) {
-        return null;
-    }
-
     public static void deposito(String idCliente, String idCuenta, int monto){
 
         int contador = 0;
         int saldo = 0;
         String arreglo [] = new String [4];
-        int saldo_nuevo = 0;
+        int saldoNuevo = 0;
         if(Ruta.existe(idCliente,idCuenta)){
-            File rutaCuenta = new File(Ruta.path(idCliente,idCuenta));
+
             try{
-                File cuenta = new File (rutaCuenta.getPath()+"/info.txt");
+                File cuenta = new File (Ruta.path(idCliente,idCuenta)+"info.txt");
+                
                 try (Scanner archivo = new Scanner(cuenta)) {
-                    String info;
                     
+                    String info;                    
                     while(archivo.hasNextLine()){
                         info = archivo.nextLine();
                         if(contador == 1){
                             saldo = Integer.valueOf(info);
-                                saldo_nuevo = saldo + monto;
-                                info = String.valueOf(saldo_nuevo);
+                                saldoNuevo = saldo + monto;
+                                info = String.valueOf(saldoNuevo);
                         }
                         arreglo[contador] = info;
                         contador++;
                     }
                     archivo.close();
+                    try (FileWriter escribir = new FileWriter(cuenta,false)) {
+                        for(contador = 0; contador < 4; ++contador){
 
-                    contador = 0;
-                    FileWriter escribir = new FileWriter(cuenta,false);
-                    while(archivo.hasNextLine()){
-                        escribir.write(arreglo[contador]);
-                        contador++;
+                            escribir.write(arreglo[contador]);
+                            escribir.write(System.getProperty("line.separator"));
+
+                        }
+                        escribir.close();
                     }
-                    escribir.close();
+                    
+                    
                 }
                 String fecha = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
-                Transaccion.guardarTransaccion(Transaccion.toString(fecha, "deposito", String.valueOf(monto), 
-                String.valueOf(Cuenta.getSaldo(idCliente,idCuenta)+monto), String.valueOf(Cuenta.getSaldo(idCliente,idCuenta))), idCliente,idCuenta);
+                Transaccion.guardarTransaccion(Transaccion.toString(fecha, "deposito", String.valueOf(monto),
+                 String.valueOf(saldo), String.valueOf(saldoNuevo)), idCliente, idCuenta);
+                Cuenta.putNumeroDeTransacciones(idCliente, idCuenta, Cuenta.getNumeroDeTransacciones(idCliente, idCuenta)+1);
 
             }catch (Exception e) {
                System.out.println("Ocurrio un error");
@@ -293,6 +297,8 @@ public class Cuenta {
     }
 
     public static void transferencia(String idClienteE, String idCuentaE, int monto, String idClienteR, String idCuentaR){
+
+        if(Cuenta.getSaldo(idClienteE, idCuentaE) < monto) return;
 
         retiro(idClienteE, idCuentaE, monto);
         deposito(idClienteR, idCuentaR, monto);
@@ -318,7 +324,7 @@ public class Cuenta {
         String[] transacciones = Cuenta.getTransacciones(idCliente,idCuenta);
 
         for(int i = 0; i < transacciones.length; ++i){
-
+            if(transacciones[i] == null) continue;
             if(Transaccion.getFecha(transacciones[i]).compareTo(FechaInicial) >= 0 &&
                 Transaccion.getFecha(transacciones[i]).compareTo(FechaFinal) <= 0){
 
