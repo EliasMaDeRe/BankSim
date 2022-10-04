@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.Date;
 import java.util.Scanner;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
@@ -18,11 +19,9 @@ public class Cuenta {
     }
 
     public static String[] getTransacciones(String idCliente, String idCuenta){
-<<<<<<< Updated upstream
-=======
 
         File rutacuenta = new File(Ruta.path(idCliente, idCuenta));
-        String[] transaccion;
+        String[] transaccion = new String[4];
         int cont = 0;
 
         try {
@@ -34,7 +33,8 @@ public class Cuenta {
             transaccion[cont] = archivo.nextLine();
             cont++;
         }
->>>>>>> Stashed changes
+
+        archivo.close();
 
             
         } catch (Exception e) {
@@ -49,7 +49,7 @@ public class Cuenta {
     public static int getTipoDeCuenta(String idCliente, String idCuenta){
         
         File rutacuenta = new File(Ruta.path(idCliente, idCuenta));
-        int tipocuenta, cont = 1;
+        int tipocuenta = -1, cont = 1;
 
         try {
             File cuenta = new File(rutacuenta.getPath()+"./info.txt");
@@ -57,9 +57,11 @@ public class Cuenta {
             
             while(archivo.hasNextLine()){
                 if(cont == 3){
-                    tipocuenta = archivo.nextLine();
+                    tipocuenta = Integer.parseInt(archivo.nextLine());
                 }
                 cont++;
+
+            archivo.close();
         }
 
         
@@ -123,8 +125,8 @@ public class Cuenta {
                     }
                     escribir.close();
                 }
-
-                Transaccion.guardarTransaccion(Transaccion.toString(SimpleDateFormat("yyyy/MM/dd").format(new Date()), "deposito", String.valueOf(monto), 
+                String fecha = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+                Transaccion.guardarTransaccion(Transaccion.toString(fecha, "deposito", String.valueOf(monto), 
                 String.valueOf(Cuenta.getSaldo(idCliente,idCuenta)+monto), String.valueOf(Cuenta.getSaldo(idCliente,idCuenta))), idCliente,idCuenta);
 
             }catch (Exception e) {
