@@ -6,12 +6,11 @@ public class Cliente {
 
     public static String getNombre(String idCliente){
 
-        File rutaCliente = new File(Ruta.path(idCliente));
         String[] cliente = new String [3];
         int cont = 0;
 
         try {
-            File cuenta = new File(rutaCliente+"info.txt");
+            File cuenta = new File(Ruta.pathInfo(idCliente));
             try (Scanner archivo = new Scanner(cuenta)) {
                 while(archivo.hasNextLine()){
                     cliente[cont] = archivo.nextLine();

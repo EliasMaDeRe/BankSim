@@ -29,6 +29,24 @@ public class Ruta {
 
     }
 
+    static public String pathInfo(String idCliente, String idCuenta){
+
+        return path(idCliente, idCuenta)+"info.txt";
+
+    }
+
+    static public String pathTransacciones(String idCliente, String idCuenta){
+
+        return path(idCliente, idCuenta)+"transacciones.txt";
+
+    }
+
+    static public String pathInfo(String idCliente){
+
+        return path(idCliente)+"info.txt";
+
+    }
+
     static public String pathBanco(){
 
         return "./src/Banco/";
